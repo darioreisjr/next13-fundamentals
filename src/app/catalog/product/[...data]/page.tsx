@@ -1,4 +1,4 @@
-'use client'
+import { AddToCartButton } from './add-to-cart-button'
 
 interface ProductProps {
   params: {
@@ -6,7 +6,17 @@ interface ProductProps {
   }
 }
 
-export default function Product({ params }: ProductProps) {
+// Server Components => A gente não USA Javascript no lado do cliente. Apenas do lado do servidor.
+// Client Components => O JavaScript é enviado ao navegador (cliente)
+
+// Streamig SSR => Ler/escrever dados de forma parcial + Server-side Rendering
+
+// Renderizar um componente pelo lado do servidor de forma parcial
+
+export default async function Product({ params }: ProductProps) {
+  const response = await fetch('https://api.github.com/users/darioreisjr')
+  const user = await response.json()
+
   const [productId, size, color] = params.data
   return (
     <div>
@@ -14,9 +24,7 @@ export default function Product({ params }: ProductProps) {
       <p>Size: {size}</p>
       <p>Color: {color}</p>
 
-      <button className="btn bg-color-red" onClick={() => alert('Add to cart')}>
-        Adicionar ao carrinho
-      </button>
+      <AddToCartButton />
     </div>
   )
 }
